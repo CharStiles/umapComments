@@ -3,11 +3,11 @@ import Layout from './Layout'
 import * as _ from 'lodash'
 import * as d3 from 'd3'
 
-let algorithm_options = ['MD 0.5\n neighbors 15', 'MD 1 neighbors 5', 'usernames Considered']
+let algorithm_options = ['Localy Structured', 'Globaly Structured', 'Usernames Considered']
 let algorithm_embedding_keys = [
-  'mnist_embeddings',
-  'tsne_mnist_embeddings',
-  'md08_umap_mnist_embeddings',
+  'mnist_embeddings', // these are not named properly
+  'tsne_mnist_embeddings', // these are not named properly
+  'md08_umap_mnist_embeddings', // these are not named properly
 ]
 
 class Data extends Component {

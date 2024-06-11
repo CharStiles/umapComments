@@ -15,11 +15,11 @@ class Sidebar extends Component {
     var parts = comment.split(' ');
 
     // Extract author and date
-    var author = parts[0].substring(0, parts[0].length-2);
+    var author = parts[0].substring(0, parts[0].length-1);
     var date = parts[1].substring(0, 10); // Extract first 10 characters for date
-
+    var firstWord = parts[1].substring(10, parts[1].length);
     // Join the remaining parts to form the comment text
-    var commentText = parts.slice(2).join(' ');
+    var commentText = firstWord+ " "+parts.slice(2).join(' ');
 
     // Format the output string
     var formattedString = [author , date , commentText];
@@ -40,7 +40,7 @@ class Sidebar extends Component {
       algorithm_options,
       algorithm_choice,
     } = this.props
-
+    
     return (
       <div
         style={{
@@ -52,26 +52,7 @@ class Sidebar extends Component {
       >
         <div>
           {' '}
-          <div
-            style={{
-              padding: grem / 2,
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}
-          >
-            <div>Algorithm:</div>
-            <select
-              onChange={this.handleSelectAlgorithm}
-              value={algorithm_options[algorithm_choice]}
-            >
-              {algorithm_options.map((option, index) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
-          </div>
+      
           <div
             style={{
               display: 'flex',
@@ -92,7 +73,7 @@ class Sidebar extends Component {
               <div
                 style={{
                   background: hover_index
-                    ? `rgb(${color_array[mnist_labels[hover_index]].join(',')})`
+                    ? `rgb(${color_array[mnist_labels[hover_index]  % color_array.length].join(',')})`
                     : 'transparent',
                   color: hover_index ? '#000' : '#999',
                   padding: p(grem / 4, grem / 2),
@@ -173,15 +154,54 @@ class Sidebar extends Component {
             </div>
           </div>
         </div>
+      
         <div style={{ padding: grem / 2 }}>
           <div>
+          <div
+            style={{
+              padding: grem / 2,
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+          >
+            <div>Structure:</div>
+            <select
+              onChange={this.handleSelectAlgorithm}
+              value={algorithm_options[algorithm_choice]}
+            >
+              {algorithm_options.map((option, index) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </div>
+          
+          Toggle Labels:_  
+<label class="switch" >
+
+  <input type="checkbox" onChange={(e) => {
+                let t = e.target.checked
+                this.props.setLabelToggle(t)
+              }}>
+    
+  </input>
+  <span class="slider round"></span>
+  
+</label>
            
             <button
               onClick={() => {
                 this.props.toggleAbout(true)
               }}
+              style={{
+                //align right
+                textAlign: 'right',
+                width: '100%',
+              }}
             >
-              About
+                  About
             </button>
           </div>
         </div>

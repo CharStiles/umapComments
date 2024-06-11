@@ -11,6 +11,7 @@ let sprite_number = 14
 let sprite_image_size = 28
 // actual sprite size needs to be power of 2
 let sprite_actual_size = 2048
+let gPlane;
 
 let mnist_tile_string = 'mnist_tile_solid_'
 let mnist_tile_locations = [...Array(sprite_number)].map(
@@ -67,8 +68,39 @@ class Projection extends Component {
     this.changeEmbeddings = this.changeEmbeddings.bind(this)
   }
 
-  changeEmbeddings(prev_choice, new_choice) {
-    // assumes mnist embeddings has been updated
+  changeEmbeddings(prev_choice, new_choice,labels) {
+    console.log(new_choice)
+    console.log(this.planes)
+    console.log(this.textPlane4)
+    console.log(this.textPlane3)
+    console.log(this.textPlane5)
+    // // assumes mnist embeddings has been updated
+    // for (let i = 0 ; i < this.planes.length; i++){
+    //   console.log(i)
+
+    //   if(i == new_choice){
+    //     this.planes[i].visible = true;
+    //   }
+    //   else{
+    //     this.planes[i].visible = false;
+    //   } 
+      
+    // }
+
+    this.textPlane4.visible = false;
+
+    this.textPlane3.visible = false;
+    this.textPlane5.visible = false;
+    if (new_choice ==0 && labels == true){
+      this.textPlane3.visible = true;
+    }
+    if (new_choice ==1&& labels == true){
+      this.textPlane4.visible = true;
+    }
+    if (new_choice ==2&& labels == true){
+      this.textPlane5.visible = true;
+    }
+
 
     let ranges = []
     for (let i = 0; i < sprite_number; i++) {
@@ -222,10 +254,10 @@ class Projection extends Component {
     var g = bitmap.getContext('2d');
     bitmap.width = 2000;
     bitmap.height = 2000;
-    g.font = 'Bold 90px Futura';
+    g.font = 'Bold 140px Futura';
     let text="ShaderToy Comment Map"
     g.fillStyle = 'white';
-    g.fillText(text, 100, 500);
+    g.fillText(text, 0, 500);
     g.strokeStyle = 'black';
     g.strokeText(text, 0, 20);
     // canvas contents will be used for a texture
@@ -235,42 +267,144 @@ class Projection extends Component {
     var material = new THREE.MeshBasicMaterial({ map: textureWords, transparent:true,  depthTest: false });
     var geometry = new THREE.PlaneGeometry(8, 8);
     // Create a mesh with the geometry and material
-    var textPlane = new THREE.Mesh(geometry, material);
-   textPlane.scale.set(5.5, 5.5, 5.5);
-    textPlane.position.set( textPlane.position.x, textPlane.position.y+7, 0+textPlane.position.z);
-    this.scene.add(textPlane);
+    this.textPlane1 = new THREE.Mesh(geometry, material);
+    this.textPlane1.scale.set(4, 4, 4);
+    this.textPlane1.position.set( this.textPlane1.position.x, this.textPlane1.position.y+7, 0+this.textPlane1.position.z);
+    this.scene.add(this.textPlane1);
 
 
     var bitmap2 = document.createElement('canvas');
-    var g2 = bitmap.getContext('2d');
+    var bitmap3 = document.createElement('canvas');
+    var bitmap4 = document.createElement('canvas');
+    var bitmap5 = document.createElement('canvas');
+
+    var g2 = bitmap2.getContext('2d');
+    var g3 = bitmap3.getContext('2d');
+    var g4 = bitmap4.getContext('2d');
+    var g5 = bitmap5.getContext('2d');
+
      bitmap2.width = 2000;
      bitmap2.height = 2000;
+
+     bitmap3.width = 2000;
+     bitmap3.height = 2000;
+
+     bitmap4.width = 2000;
+     bitmap4.height = 2000;
+
+     bitmap5.width = 2000;
+     bitmap5.height = 2000;
+
     g2.font = 'Bold 40px Futura';
-    let text2="comments from the top 1000 shaders are clustered by similarity and topic."
+    g3.font = 'Bold 34px Futura';
+    g4.font = 'Bold 34px Futura';
+    g5.font = 'Bold 25px Futura';
+    let text2="Comments from the top 1000 shaders clustered by similarity and topic."
     let text3="Hover over a point to see the comment."
     g2.fillStyle = 'white';
-    g2.fillText(text2, 100, 600);
-    g2.fillText(text3, 100, 700);
-    g2.strokeStyle = 'black';
-    g2.strokeText(text2, 0, 20);
+    g3.fillStyle = 'white';
+    g4.fillStyle = 'white';
+    g5.fillStyle = 'white';
+
+    g2.fillText(text2, 300, 350);
+    g2.fillText(text3, 300, 400);
+
+    // g2.strokeStyle = 'black';
+    // g3.strokeStyle = 'black';
+    // g2.strokeText(text2, 0, 20);
+    let sc = 5.5/2;
+    g3.fillText("Graphics Processing Unit talk", 429.1687469482422*sc, 352* sc);
+    g3.fillText("code", 1067, 1207.25);
+    g3.fillText("thanking and helping", 750.75 , 726);
+    g3.fillText("single word compliments",811.25, 387.75);
+    g3.fillText("WebGL",816.75, 1210);
+    g3.fillText("Technical Comments",893.75, 1086.25);
+    g3.fillText("questions",858, 778.25);
+
+    // g3.fillText("1", 20, 20);
+    // g3.fillText("2", 20, 640*sc);
+
+    // g3.fillText("3", 620*sc, 20);
+    // g3.fillText("4", 620*sc, 640*sc);
+
+    // g4.fillText("A", 20, 20);
+    // g4.fillText("B", 1006.5, 522.5);
+
+    g5.fillText("deleted", 803, 288.75);
+    g5.fillText("Connecting off shadertoy", 1006.5, 522.5);
+    g5.fillText("technical corrections", 968, 143);
+    g5.fillText("shadertoy creator comments", 1108.25, 566.5);
+    g5.fillText("asking for commercial use", 940.5, 319);
+    // g5.fillText("mind blown", 789.25, 555.5);
+    g5.fillText("technical compliments", 1006.5, 387.75);
+    g5.fillText("terse compliments", 739.75, 662.75);
+
     // canvas contents will be used for a texture
     var textureWords2 = new THREE.Texture(bitmap2) 
     textureWords2.needsUpdate = true;
 
+    var textureWords3 = new THREE.Texture(bitmap3) 
+    textureWords3.needsUpdate = true;
+
+    var textureWords4 = new THREE.Texture(bitmap4) 
+    textureWords4.needsUpdate = true;
+
+    var textureWords5 = new THREE.Texture(bitmap5) 
+    textureWords5.needsUpdate = true;
+
+    var material3 = new THREE.MeshBasicMaterial({ map: textureWords3, transparent:true,  depthTest: false });
+    var geometry3 = new THREE.PlaneGeometry(8, 8);
+
     var material2 = new THREE.MeshBasicMaterial({ map: textureWords2, transparent:true,  depthTest: false });
     var geometry2 = new THREE.PlaneGeometry(8, 8);
+
+    var material4 = new THREE.MeshBasicMaterial({ map: textureWords4, transparent:true,  depthTest: false });
+    var material5 = new THREE.MeshBasicMaterial({ map: textureWords5, transparent:true,  depthTest: false });
+
+
     // Create a mesh with the geometry and material
-    var textPlane2 = new THREE.Mesh(geometry2, material2);
-   textPlane2.scale.set(5.5, 5.5, 5.5);
-    textPlane2.position.set( textPlane2.position.x, textPlane2.position.y+10, 0+textPlane2.position.z);
-    this.scene.add(textPlane2);
+    this.textPlane2 = new THREE.Mesh(geometry2, material2);
+    this.textPlane3 = new THREE.Mesh(geometry3, material3);
+    this.textPlane4 = new THREE.Mesh(geometry3, material4);
+    this.textPlane5 = new THREE.Mesh(geometry3, material5);
+
+    this.textPlane2.scale.set(5.5, 5.5, 5.5);
+    this.textPlane2.position.set( this.textPlane2.position.x, this.textPlane2.position.y-3, 0+this.textPlane2.position.z);
+
+    this.textPlane3.scale.set(5.5, 5.5, 5.5);
+    this.textPlane3.position.set( this.textPlane3.position.x, this.textPlane3.position.y-3, 0+this.textPlane3.position.z);
+
+    this.textPlane4.scale.set(5.5, 5.5, 5.5);
+    this.textPlane4.position.set( this.textPlane4.position.x, this.textPlane4.position.y-3, 0+this.textPlane4.position.z);
+
+    this.textPlane5.scale.set(5.5, 5.5, 5.5);
+    this.textPlane5.position.set( this.textPlane5.position.x, this.textPlane5.position.y-3, 0+this.textPlane5.position.z);
+
+    this.planes = [];
+
+    this.planes[0] = this.textPlane3;
+    this.planes[1] = this.textPlane4;
+    this.planes[2] = this.textPlane5;
+
+    this.scene.add(this.textPlane2);
+    this.scene.add(this.textPlane3);
+    this.scene.add(this.textPlane4);
+    this.scene.add(this.textPlane5);
+
+    this.textPlane4.visible = false;
+    this.textPlane5.visible = false;
+
+console.log("PLANES")
+console.log(this.planes)
+
+    gPlane = this.textPlane3;
   }
 
   addPoints() {
-    let { mnist_embeddings, mnist_labels, comments, color_array } = this.props
+    let { mnist_embeddings, mnist_labels, comments, color_array ,algorithm_choice} = this.props
 
 
-
+    let sc = algorithm_choice == 2 ? 2 :1;
 
     // split embeddings and labels into chunks to match sprites
     let ranges = []
@@ -305,7 +439,7 @@ class Projection extends Component {
       let vertices = []
       for (let v = 0; v < echunk.length; v++) {
         let embedding = echunk[v]
-        let vert = new THREE.Vector3(embedding[0], embedding[1], 0)
+        let vert = new THREE.Vector3(embedding[0]*sc, embedding[1]*sc, 0)
         vertices[v] = vert
       }
 
@@ -323,8 +457,8 @@ class Projection extends Component {
         let x = echunk[i][0]
         let y = echunk[i][1]
         let z = 0
-        positions[index] = x
-        positions[index + 1] = y
+        positions[index] = x * sc
+        positions[index + 1] = y * sc
         positions[index + 2] = z
       }
 
@@ -354,10 +488,10 @@ class Projection extends Component {
 
       for (let i = 0, index = 0, l = numVertices; i < l; i++, index += 3) {
 
-        let color = color_array[lchunk[i]]
+        let color = color_array[lchunk[i] % color_array.length]
         
-        colors[index] = lchunk[i]*4./ 255
-        colors[index + 1] =color[1] / 255
+        colors[index ] = lchunk[i]*8./ 255
+        colors[index + 1] =(i%255) / 255
         colors[index + 2] = color[2] / 255
       }
       
@@ -549,7 +683,7 @@ class Projection extends Component {
 
 
       sidebar_ctx.fillRect(0, 0, sidebar_image_size, sidebar_image_size*0.75)
-      console.log(full_index)
+      // console.log(full_index)
       let shaderImage = shader_images[full_index];
       if (shaderImage && shaderImage.src !== "" && shaderImage.width > 0 && shaderImage.height > 0) {
         sidebar_ctx.drawImage(
@@ -593,6 +727,12 @@ class Projection extends Component {
       let mouse_position = [mouseX, mouseY]
       this.checkIntersects(mouse_position)
     })
+    // mouseclick
+    view.on('click', () => {
+      let [mouseX, mouseY] = d3.mouse(view.node())
+      console.log(mouseX *5.5/2, mouseY*5.5/2)
+     console.log("CLICK~!")
+    })
   }
 
   init() {
@@ -627,6 +767,7 @@ class Projection extends Component {
     requestAnimationFrame(this.animate)
     TWEEN.update()
     this.renderer.render(this.scene, this.camera)
+
   }
 
   componentDidMount() {
@@ -634,14 +775,14 @@ class Projection extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    let { width, height } = this.props
+    let { width, height, labels } = this.props
     if (width !== prevProps.width || height !== prevProps.height) {
       this.handleResize(width, height)
     }
     if (prevProps.algorithm_choice !== this.props.algorithm_choice) {
       this.changeEmbeddings(
         prevProps.algorithm_choice,
-        this.props.algorithm_choice
+        this.props.algorithm_choice, labels
       )
     }
   }
@@ -651,7 +792,27 @@ class Projection extends Component {
   }
 
   render() {
-    let { width, height } = this.props
+
+    let { width, height, labels } = this.props
+
+    // this makes the labels button work
+    if(this.scene && this.textPlane3 !=undefined){
+      
+      if (this.props.algorithm_choice == 0){
+        console.log("this.props.algorithm_choic") 
+        this.textPlane3.visible = labels;
+      }
+      if (this.props.algorithm_choice == 1){
+        this.textPlane4.visible = labels;
+      }
+      if (this.props.algorithm_choice == 2){
+        this.textPlane5.visible = labels;
+      }
+      this.textPlane1.visible = !labels;
+      this.textPlane2.visible = !labels;
+
+    }
+    
     return (
       <div
         style={{ width: width, height: height, overflow: 'hidden' }}
