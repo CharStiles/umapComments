@@ -331,7 +331,7 @@ class Projection extends Component {
     // g4.fillText("B", 1006.5, 522.5);
 
     g5.fillText("deleted", 803, 288.75);
-    g5.fillText("Connecting off shadertoy", 1006.5, 522.5);
+    g5.fillText("Connecting off shadertoy", 1016.5, 465.5);
     g5.fillText("technical corrections", 968, 143);
     g5.fillText("shadertoy creator comments", 1108.25, 566.5);
     g5.fillText("asking for commercial use", 940.5, 319);
